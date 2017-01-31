@@ -21,10 +21,34 @@ public class todosController {
     }
     // List todos
     public static Todo[] listTodos(Map<String, String[]> queryParams) {
-        return todos;
+        Todo[] filterTodos = todos;
+        // Filter number of results if defined
+
+        if(queryParams.containsKey("limit")) {
+            int Todolimit = Integer.parseInt(queryParams.get("limit")[0]);
+            filterTodos = limitNumTodo(filterTodos, Todolimit);
+        }
+
+        return filterTodos;
     }
 
-    // Get a single todo
+    // limit the number of results (put at end of listTodos function).
+    public static Todo[] limitNumTodo(Todo[] filterTodos, int Tlimit) {
+        Todo[] showlist = new Todo[]{null};
+        int tracker = 0;
+        int whatsLeft = Tlimit;
+        if (filterTodos.length > Tlimit) {
+            while (whatsLeft > 0) {
+                showlist[tracker] = filterTodos[tracker];
+                tracker++;
+                whatsLeft--;
+            }
+            return showlist;
+        }
+            else {return filterTodos; }
+    }
+
+    // Get a single todo with id
     public static Todo getTodo(String id) {
         return Arrays.stream(todos).filter(x -> x._id.equals(id)).findFirst().orElse(null);
     }
