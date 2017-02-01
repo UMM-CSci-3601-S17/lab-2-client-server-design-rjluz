@@ -24,6 +24,12 @@ public class todosController {
         Todo[] filterTodos = todos;
         // Filter number of results if defined
 
+        // Filter age if defined
+        if(queryParams.containsKey("status")) {
+            String cont = queryParams.get("status")[0];
+            filterTodos = completeTodos(filterTodos, cont);
+        }
+
         if(queryParams.containsKey("limit")) {
             int Todolimit = Integer.parseInt(queryParams.get("limit")[0]);
             filterTodos = limitNumTodo(filterTodos, Todolimit);
@@ -46,6 +52,14 @@ public class todosController {
             return showlist;
         }
             else {return filterTodos; }
+    }
+
+    // filter todos based on complete or incomplete status.
+    public static Todo[] completeTodos(Todo[] filterTodos, String complete) {
+        boolean comp = true;
+        if(complete.equals("incomplete")) { comp = false;}
+        boolean finalComp = comp;
+        return Arrays.stream(filterTodos).filter(x -> x.status == finalComp).toArray(Todo[]::new);
     }
 
     // Get a single todo with id
