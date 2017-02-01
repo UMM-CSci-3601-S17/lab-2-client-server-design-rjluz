@@ -34,7 +34,7 @@ public class todosController {
 
     // limit the number of results (put at end of listTodos function).
     public static Todo[] limitNumTodo(Todo[] filterTodos, int Tlimit) {
-        Todo[] showlist = new Todo[]{null};
+        Todo[] showlist = new Todo[Tlimit];
         int tracker = 0;
         int whatsLeft = Tlimit;
         if (filterTodos.length > Tlimit) {
