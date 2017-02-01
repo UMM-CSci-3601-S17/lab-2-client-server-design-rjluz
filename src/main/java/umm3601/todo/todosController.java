@@ -22,7 +22,11 @@ public class todosController {
     // List todos
     public static Todo[] listTodos(Map<String, String[]> queryParams) {
         Todo[] filterTodos = todos;
-        // Filter number of results if defined
+        // Filter body by user input string.
+        if(queryParams.containsKey("contains")) {
+            String usrIn = queryParams.get("contains")[0];
+            filterTodos = bodyContainsTodos(filterTodos, usrIn);
+        }
 
         // Filter age if defined
         if(queryParams.containsKey("status")) {
@@ -30,6 +34,7 @@ public class todosController {
             filterTodos = completeTodos(filterTodos, cont);
         }
 
+        // Filter number of results if defined
         if(queryParams.containsKey("limit")) {
             int Todolimit = Integer.parseInt(queryParams.get("limit")[0]);
             filterTodos = limitNumTodo(filterTodos, Todolimit);
@@ -60,6 +65,11 @@ public class todosController {
         if(complete.equals("incomplete")) { comp = false;}
         boolean finalComp = comp;
         return Arrays.stream(filterTodos).filter(x -> x.status == finalComp).toArray(Todo[]::new);
+    }
+
+    // filter todos based on contents in body.
+    public static Todo[] bodyContainsTodos(Todo[] filterTodos, String userInput) {
+        return Arrays.stream(filterTodos).filter(x -> x.body.contains(userInput)).toArray(Todo[]::new);
     }
 
     // Get a single todo with id
