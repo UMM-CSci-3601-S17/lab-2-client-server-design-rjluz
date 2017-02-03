@@ -22,13 +22,26 @@ public class todosController {
     // List todos
     public static Todo[] listTodos(Map<String, String[]> queryParams) {
         Todo[] filterTodos = todos;
+
+        // Filter todos by category.
+        if(queryParams.containsKey("category")) {
+            String usrIn = queryParams.get("category")[0];
+            filterTodos = categoryTodos(filterTodos, usrIn);
+        }
+
+        // Filter todos by owner.
+        if(queryParams.containsKey("owner")) {
+            String usrIn = queryParams.get("owner")[0];
+            filterTodos = ownerTodos(filterTodos, usrIn);
+        }
+
         // Filter body by user input string.
         if(queryParams.containsKey("contains")) {
             String usrIn = queryParams.get("contains")[0];
             filterTodos = bodyContainsTodos(filterTodos, usrIn);
         }
 
-        // Filter age if defined
+        // Filter status complete or incomplete
         if(queryParams.containsKey("status")) {
             String cont = queryParams.get("status")[0];
             filterTodos = completeTodos(filterTodos, cont);
@@ -39,6 +52,7 @@ public class todosController {
             int Todolimit = Integer.parseInt(queryParams.get("limit")[0]);
             filterTodos = limitNumTodo(filterTodos, Todolimit);
         }
+
 
         return filterTodos;
     }
@@ -71,6 +85,19 @@ public class todosController {
     public static Todo[] bodyContainsTodos(Todo[] filterTodos, String userInput) {
         return Arrays.stream(filterTodos).filter(x -> x.body.contains(userInput)).toArray(Todo[]::new);
     }
+
+    //filter todos based on owner
+    public static Todo[] ownerTodos(Todo[] filterTodos, String userInput) {
+        return Arrays.stream(filterTodos).filter(x -> x.owner.equals(userInput)).toArray(Todo[]::new);
+    }
+
+    //filter todos based on category
+    public static Todo[] categoryTodos(Todo[] filterTodos, String userInput) {
+        return Arrays.stream(filterTodos).filter(x -> x.category.equals(userInput)).toArray(Todo[]::new);
+    }
+
+    //filter todos in alphabetical order
+
 
     // Get a single todo with id
     public static Todo getTodo(String id) {
