@@ -6,6 +6,12 @@ window.onload = function() {
 
     var element = document.getElementById('getAll');
     element.addEventListener("click", getAllTodos, true);
+
+    var element2 = document.getElementById('getID');
+        element2.addEventListener("click", getIDTodo, true);
+
+    var element3 = document.getElementById('limitResults');
+    element3.addEventListener("click", limitTodo, true);
 }
 
 /**
@@ -17,6 +23,28 @@ var getAllTodos = function() {
         document.getElementById('jsonDump').innerHTML = returned_json;
     });
 }
+
+/**
+ * Function to to-do by ID
+ */
+var getIDTodo = function() {
+    var text;
+    var enterID = prompt("Enter ID below.","58895985a22c04e761776d54");
+    var TDHttp = new HttpClient();
+    TDHttp.get("/api/todos/" + enterID, function(returned_json){
+        document.getElementById('jsonDump').innerHTML = returned_json;
+    });
+}
+
+var limitTodo = function() {
+    var text;
+    var enterID = prompt("Enter limit below.", 8);
+    var TDHttp = new HttpClient();
+    TDHttp.get("/api/todos?limit=" + enterID, function(returned_json){
+        document.getElementById('jsonDump').innerHTML = returned_json;
+    });
+}
+
 
 function HttpClient() {
     // We'll take a URL string, and a callback function.
