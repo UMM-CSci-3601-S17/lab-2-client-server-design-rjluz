@@ -4,7 +4,6 @@
 window.onload = function() {
     console.log("The page is loaded now!");
 
-    var filterD = "/api/todos";
 
     var element = document.getElementById('getAll');
     element.addEventListener("click", getAllTodos, true);
@@ -28,6 +27,8 @@ window.onload = function() {
     element7.addEventListener("click", categoryTodo, true);
 }
 
+var filterD = "/api/todos";
+var firstFilt = true;
 /**
  * Function to get all the to-dos!
  */
@@ -54,18 +55,25 @@ var limitTodo = function() {
     var text;
     var enterID = prompt("Enter limit below.", 8);
     var TDHttp = new HttpClient();
-    TDHttp.get("/api/todos" + "?limit=" + enterID, function(returned_json){
+    TDHttp.get(filterD + "?limit=" + enterID, function(returned_json){
         document.getElementById('jsonDump').innerHTML = returned_json;
     });
+    if(firstFilt) { filterD = filterD + "?limit=" + enterID; }
+    else {filterD = filterD + "&limit=" + enterID;}
+    firstFilt = false;
 }
+
 
 var statusTodo = function() {
     var text;
     var enterID = prompt("Enter either complete or incomplete.", "complete");
     var TDHttp = new HttpClient();
-    TDHttp.get("/api/todos" + "?status=" + enterID, function(returned_json){
+    TDHttp.get(filterD + "?status=" + enterID, function(returned_json){
         document.getElementById('jsonDump').innerHTML = returned_json;
     });
+    if(firstFilt) { filterD = filterD + "?status=" + enterID; }
+    else {filterD = filterD + "&status=" + enterID;}
+    firstFilt = false;
 }
 
 var containsTodo = function() {
@@ -79,18 +87,24 @@ var containsTodo = function() {
 
 var ownerTodo = function() {
     var text;
-    var enterID = prompt("Enter owner.", "Blanche");
+    var enterBlanche = prompt("Enter owner.", "Blanche");
     var TDHttp = new HttpClient();
     TDHttp.get("/api/todos?owner=" + enterID, function(returned_json){
         document.getElementById('jsonDump').innerHTML = returned_json;
     });
 }
 
+var buildCategoryURL = function(category) {
+    return "/api/todos?category=" + category;
+}
+
 var categoryTodo = function() {
     var text;
-    var enterID = prompt("Enter category.", "groceries");
+    var enterCategory = prompt("Enter category.", "groceries");
+    var restURL = buildCategoryURL(enterCategory);
+
     var TDHttp = new HttpClient();
-    TDHttp.get("/api/todos?category=" + enterID, function(returned_json){
+    TDHttp.get(restURL, function(returned_json){
         document.getElementById('jsonDump').innerHTML = returned_json;
     });
 }
