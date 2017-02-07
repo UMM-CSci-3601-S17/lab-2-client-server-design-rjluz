@@ -29,6 +29,14 @@ window.onload = function() {
 
 var filterD = "/api/todos";
 var firstFilt = true;
+
+var HTTPFunction = function(restURL) {
+    var TDHttp = new HttpClient();
+    TDHttp.get(restURL, function(returned_json){
+        document.getElementById('jsonDump').innerHTML = returned_json;
+    });
+}
+
 /**
  * Function to get all the to-dos!
  */
@@ -42,58 +50,79 @@ var getAllTodos = function() {
 /**
  * Function to to-do by ID
  */
-var getIDTodo = function() {
+var buildIdURL = function(id) {
+    return "/api/todos?id=" + id;
+}
+
+var idTodo = function() {
     var text;
-    var enterID = prompt("Enter ID below.","58895985a22c04e761776d54");
+    var enterId = prompt("Enter Id.", "58895985a22c04e761776d54");
+    var restURL = buildIdtURL(enterId);
     var TDHttp = new HttpClient();
-    TDHttp.get("/api/todos/" + enterID, function(returned_json){
-        document.getElementById('jsonDump').innerHTML = returned_json;
-    });
+    HTTPFunction(restURL);
+}
+/*
+ * Function to to-do by Limit
+ */
+var buildLimitURL = function(limit) {
+    return "/api/todos?limit=" + limit;
 }
 
 var limitTodo = function() {
     var text;
-    var enterID = prompt("Enter limit below.", 8);
+    var enterLimit = prompt("Enter limit.", "8");
+    var restURL = buildLimitURL(enterLimit);
     var TDHttp = new HttpClient();
-    TDHttp.get(filterD + "?limit=" + enterID, function(returned_json){
-        document.getElementById('jsonDump').innerHTML = returned_json;
-    });
-    if(firstFilt) { filterD = filterD + "?limit=" + enterID; }
-    else {filterD = filterD + "&limit=" + enterID;}
-    firstFilt = false;
+    HTTPFunction(restURL);
 }
 
+/**
+ * Function to to-do by Status
+ */
+var buildStatusURL = function(status) {
+    return "/api/todos?status=" + status;
+}
 
 var statusTodo = function() {
     var text;
-    var enterID = prompt("Enter either complete or incomplete.", "complete");
+    var enterStatus = prompt("Enter status.", "complete");
+    var restURL = buildStatusURL(enterStatus);
     var TDHttp = new HttpClient();
-    TDHttp.get(filterD + "?status=" + enterID, function(returned_json){
-        document.getElementById('jsonDump').innerHTML = returned_json;
-    });
-    if(firstFilt) { filterD = filterD + "?status=" + enterID; }
-    else {filterD = filterD + "&status=" + enterID;}
-    firstFilt = false;
+    HTTPFunction(restURL);
 }
 
+/**
+ * Function to to-do by Contains
+ */
+var buildContainsURL = function(contains) {
+    return "/api/todos?contains=" + contains;
+}
 var containsTodo = function() {
     var text;
-    var enterID = prompt("Enter text that is located in body of Todo.", "in");
+    var enterContains = prompt("Enter contains.", "in");
+    var restURL = buildContainsURL(enterContains);
     var TDHttp = new HttpClient();
-    TDHttp.get("/api/todos?contains=" + enterID, function(returned_json){
-        document.getElementById('jsonDump').innerHTML = returned_json;
-    });
+    HTTPFunction(restURL);
 }
 
+/**
+ * Function to to-do by Owner
+ */
+var buildOwnerURL = function(owner) {
+    return "/api/todos?owner=" + owner;
+}
 var ownerTodo = function() {
     var text;
-    var enterBlanche = prompt("Enter owner.", "Blanche");
+    var enterOwner = prompt("Enter owner.", "Blanche");
+    var restURL = buildOwnerURL(enterOwner);
     var TDHttp = new HttpClient();
-    TDHttp.get("/api/todos?owner=" + enterID, function(returned_json){
-        document.getElementById('jsonDump').innerHTML = returned_json;
-    });
+    HTTPFunction(restURL);
+
 }
 
+/**
+ * Function to to-do by Category
+ * */
 var buildCategoryURL = function(category) {
     return "/api/todos?category=" + category;
 }
@@ -102,11 +131,8 @@ var categoryTodo = function() {
     var text;
     var enterCategory = prompt("Enter category.", "groceries");
     var restURL = buildCategoryURL(enterCategory);
-
     var TDHttp = new HttpClient();
-    TDHttp.get(restURL, function(returned_json){
-        document.getElementById('jsonDump').innerHTML = returned_json;
-    });
+    HTTPFunction(restURL);
 }
 
 
