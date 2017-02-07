@@ -47,9 +47,7 @@ var getAllTodos = function() {
     });
 }
 
-/**
- * Function to to-do by ID
- */
+
 var buildIdURL = function(id) {
     return "/api/todos?id=" + id;
 }
@@ -61,9 +59,7 @@ var idTodo = function() {
     var TDHttp = new HttpClient();
     HTTPFunction(restURL);
 }
-/*
- * Function to to-do by Limit
- */
+
 var buildLimitURL = function(limit) {
     return "/api/todos?limit=" + limit;
 }
@@ -76,9 +72,6 @@ var limitTodo = function() {
     HTTPFunction(restURL);
 }
 
-/**
- * Function to to-do by Status
- */
 var buildStatusURL = function(status) {
     return "/api/todos?status=" + status;
 }
@@ -91,9 +84,7 @@ var statusTodo = function() {
     HTTPFunction(restURL);
 }
 
-/**
- * Function to to-do by Contains
- */
+
 var buildContainsURL = function(contains) {
     return "/api/todos?contains=" + contains;
 }
@@ -105,9 +96,7 @@ var containsTodo = function() {
     HTTPFunction(restURL);
 }
 
-/**
- * Function to to-do by Owner
- */
+
 var buildOwnerURL = function(owner) {
     return "/api/todos?owner=" + owner;
 }
@@ -120,9 +109,6 @@ var ownerTodo = function() {
 
 }
 
-/**
- * Function to to-do by Category
- * */
 var buildCategoryURL = function(category) {
     return "/api/todos?category=" + category;
 }
