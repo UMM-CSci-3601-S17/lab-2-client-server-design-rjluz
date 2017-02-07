@@ -9,7 +9,7 @@ window.onload = function() {
     element.addEventListener("click", getAllTodos, true);
 
     var element2 = document.getElementById('getID');
-    element2.addEventListener("click", getIDTodo, true);
+    element2.addEventListener("click", idTodo, true);
 
     var element3 = document.getElementById('limitResults');
     element3.addEventListener("click", limitTodo, true);
@@ -41,23 +41,19 @@ var HTTPFunction = function(restURL) {
  * Function to get all the to-dos!
  */
 var getAllTodos = function() {
-    var TDHttp = new HttpClient();
-    TDHttp.get("/api/todos", function(returned_json){
-        document.getElementById('jsonDump').innerHTML = returned_json;
-    });
+    HTTPFunction("/api/todos");
 }
 
 
 var buildIdURL = function(id) {
-    return "/api/todos?id=" + id;
+    return "/api/todos/" + id;
 }
 
 var idTodo = function() {
     var text;
     var enterId = prompt("Enter Id.", "58895985a22c04e761776d54");
-    var restURL = buildIdtURL(enterId);
-    var TDHttp = new HttpClient();
-    HTTPFunction(restURL);
+    var restURL1 = buildIdURL(enterId);
+    HTTPFunction(restURL1);
 }
 
 var buildLimitURL = function(limit) {
@@ -67,9 +63,8 @@ var buildLimitURL = function(limit) {
 var limitTodo = function() {
     var text;
     var enterLimit = prompt("Enter limit.", "8");
-    var restURL = buildLimitURL(enterLimit);
-    var TDHttp = new HttpClient();
-    HTTPFunction(restURL);
+    var restURL2 = buildLimitURL(enterLimit);
+    HTTPFunction(restURL2);
 }
 
 var buildStatusURL = function(status) {
@@ -79,9 +74,8 @@ var buildStatusURL = function(status) {
 var statusTodo = function() {
     var text;
     var enterStatus = prompt("Enter status.", "complete");
-    var restURL = buildStatusURL(enterStatus);
-    var TDHttp = new HttpClient();
-    HTTPFunction(restURL);
+    var restURL3 = buildStatusURL(enterStatus);
+    HTTPFunction(restURL3);
 }
 
 
@@ -91,9 +85,8 @@ var buildContainsURL = function(contains) {
 var containsTodo = function() {
     var text;
     var enterContains = prompt("Enter contains.", "in");
-    var restURL = buildContainsURL(enterContains);
-    var TDHttp = new HttpClient();
-    HTTPFunction(restURL);
+    var restURL4 = buildContainsURL(enterContains);
+    HTTPFunction(restURL4);
 }
 
 
@@ -103,9 +96,8 @@ var buildOwnerURL = function(owner) {
 var ownerTodo = function() {
     var text;
     var enterOwner = prompt("Enter owner.", "Blanche");
-    var restURL = buildOwnerURL(enterOwner);
-    var TDHttp = new HttpClient();
-    HTTPFunction(restURL);
+    var restURL5 = buildOwnerURL(enterOwner);
+    HTTPFunction(restURL5);
 
 }
 
@@ -116,9 +108,8 @@ var buildCategoryURL = function(category) {
 var categoryTodo = function() {
     var text;
     var enterCategory = prompt("Enter category.", "groceries");
-    var restURL = buildCategoryURL(enterCategory);
-    var TDHttp = new HttpClient();
-    HTTPFunction(restURL);
+    var restURL6 = buildCategoryURL(enterCategory);
+    HTTPFunction(restURL6);
 }
 
 
