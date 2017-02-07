@@ -8,10 +8,5 @@ describe('testing basic functions', function(){
     it('returnKittens should return kittens', function(){
         expect(returnKittens()).toBe("kittens");
     });
-
-    ////this test should fail.
-    it('this test should fail!', function(){
-        expect(returnKittens()).toBe("Not Kittens!");
-    });
 });
 
